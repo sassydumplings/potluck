@@ -1,0 +1,10 @@
+h1>List of Tags</h1>
+<ul>
+<% @tags.each do |tag| %>
+  <li>
+    <%= tag.name %>
+    <a href="/edit_tag/<%= tag.id %>">edit</a>
+    <a href="/delete_tag/<%= tag.id %>">delete</a>
+      </li>
+<% end %>
+</ul>
