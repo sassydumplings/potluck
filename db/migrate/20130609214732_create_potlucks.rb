@@ -1,9 +1,8 @@
 class CreatePotlucks < ActiveRecord::Migration
-  def up
+  def  change
       create_table :potlucks do |t|
-        t.string  :name
-        t.date    :date
-        t.integer :item_id
+            t.string :name
+            t.datetime :timestamp
       end
-    end
   end
+end

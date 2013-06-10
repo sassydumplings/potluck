@@ -14,17 +14,68 @@ ActiveRecord::Base.establish_connection(
   :encoding => 'utf8'
 )
 
+binding.pry
+
 require_relative "models/tag"
 require_relative "models/item"
-
-# the routes for that class.
-require_relative "controllers/tags"
-require_relative "controllers/items"
-
-get "/" do
-  @tags = Tag.all
-
-  erb :index
-end
+require_relative "models/person"
+require_relative "models/potluck"
 
 binding.pry
+
+get "/" do
+
+  redirect "/potlucks"
+end
+
+
+#list all potlucks
+get "/potlucks" do
+
+  @potlucks = Potluck.all
+  erb :view_potlucks
+end
+
+#create potlucks
+get "/potluck/new" do
+  erb :create_potluck
+end
+
+post "/potluck/new" do
+  @potluck = Potluck.create(params[:potluck])
+  @redir = "/potluck/#{@potluck.id}"  #copied this .. need to understand this latr
+  redirect @redir
+end
+
+#  delete potluck and  relations
+post "/potluck/destroy" do
+
+  Potluck.destroy(params[:id])
+  redirect "/potlucks"
+
+end
+
+get "/potluck/:id" do
+
+  @potluck = Potluck.find(params[:id])
+  erb :show_potluck
+
+end
+
+# add an item
+get "/potluck/:p/add_item" do
+
+  @potluck = Potluck.find(params[:p])
+  @tags = Tag.all
+
+  erb :add_item
+end
+
+post "/potluck/:p/add_item" do
+
+  @item = Item.create(params[:item])
+
+  @redir = "/potluck/#{params[:p]}"
+
+  redirect @redir
+end

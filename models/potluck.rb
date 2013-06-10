@@ -1,3 +1,3 @@
 class Potluck < ActiveRecord::Base
-  has_many :items, :dependant => :destroy
+  has_many :items
 end
